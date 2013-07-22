@@ -1,0 +1,15 @@
+<h1>Jobs</h1>
+
+<% @jobs.each do |j| %>
+  <b><%= j.name %></b>
+  <ul><li><%= j.latitude %></li>
+  <li><%= j.longitude %></li></ul>
+<% end %>
+
+
+<%= simple_form_for Job.new do |f| %>
+  <%= f.input :name %>
+  <%= f.input :city %>
+  <%= f.input :country %>
+  <%= f.submit %>
+<% end %>

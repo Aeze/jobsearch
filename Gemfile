@@ -47,3 +47,6 @@ end
 gem 'devise', '~> 3.0'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
+gem 'geocoder'
+gem 'simple_form'
+gem 'country_select'
