@@ -68,6 +68,9 @@
         <div class="well sidebar-nav">
           <ul class="nav nav-list" id="map-navigation">
             <li class="nav-header">Jobs</li>
+            <% @jobs.each do |j| %>
+              <li><a href='#' data-position='<%= j.latitude.to_s + "," + j.longitude.to_s %>'><%= j.name %></a></li>
+            <% end %>
             <li><a href='#' data-position='42.36,-71'>Boston</a></li>
             <li><a href='#' data-position='40.4,-3.7'>Madrid</a></li>
             <li><a href='#' data-position='31.76,35.2'>Jerusalem</a></li>
