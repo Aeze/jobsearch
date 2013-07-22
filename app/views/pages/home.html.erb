@@ -1,0 +1,18 @@
+<style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:3.6em; bottom:0; width:100%; }
+  </style>
+
+<div id='map'></div>
+<script type='text/javascript'>
+var map = L.mapbox.map('map', 'examples.map-uci7ul8p')
+    .setView([40, -74.50], 9);
+
+    document.getElementById('map-navigation').onclick = function(e) {
+    var pos = e.target.getAttribute('data-position');
+    if (pos) {
+        var loc = pos.split(',');
+        map.setView(loc, 11);
+    }
+}
+</script>
