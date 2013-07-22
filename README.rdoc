@@ -1,1 +1,9 @@
 Boom.
+
+Dependencies:
+Rails 4.0
+
+To start:
+bundle
+rake db:migrate
+rails s
