@@ -64,6 +64,7 @@
 
   <div class="container-fluid">
     <div class="row-fluid">
+    <% if @jobs %>
       <div class="span3">
         <div class="well sidebar-nav">
           <ul class="nav nav-list" id="map-navigation">
@@ -94,6 +95,7 @@
           <option>Recreational</option>
         </select>
       </div><!--/span-->
+      <% end %>
       <div class="span9">
         <%= bootstrap_flash %>
         <%= yield %>
