@@ -1,10 +1,15 @@
 <style>
     body { margin:0; padding:0; }
     #map { position:absolute; top:3.6em; bottom:0; width:70%; }
-  </style>
+
+    tr {
+    cursor: pointer;
+    }
+</style>
 
 <div id='map'></div>
 <script type='text/javascript'>
+
 var map = L.mapbox.map('map', 'examples.map-uci7ul8p')
     .setView([40, -74.50], 9);
 
@@ -14,5 +19,9 @@ var map = L.mapbox.map('map', 'examples.map-uci7ul8p')
         var loc = pos.split(',');
         map.setView(loc, 11);
     }
-}
+};
+
+$('tr').click( function() {
+    window.location = $(this).find('td').attr('data-position');
+});
 </script>
