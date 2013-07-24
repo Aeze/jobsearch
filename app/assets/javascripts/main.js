@@ -1,8 +1,8 @@
 var app = angular.module('cosmop', ['ui.bootstrap','ngResource']);
 
 app.config(["$httpProvider", function(provider) {
-    provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
-  }]);
+  provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+}]);
 
 app.factory('Jobs', function($resource) {
   return $resource("/jobs/:id", {id: "@id"}, {update: {method: "PUT"}});
@@ -11,11 +11,11 @@ app.factory('Jobs', function($resource) {
 app.filter('startFrom', function() {
     return function(input, start) {
         if(input) {
-            start = +start; //parse to int
-            return input.slice(start);
-        }
-        return [];
-    }
+start = +start; //parse to int
+return input.slice(start);
+}
+return [];
+}
 });
 
 
