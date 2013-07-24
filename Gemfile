@@ -50,3 +50,12 @@ gem 'twitter-bootstrap-rails'
 gem 'geocoder'
 gem 'simple_form'
 gem 'country_select'
+
+
+#testing
+
+group :development, :test do
+  gem 'rspec-rails', '~> 2.0'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'database_cleaner'
+end
