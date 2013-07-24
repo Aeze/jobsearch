@@ -57,7 +57,9 @@
           <ul class="nav">
             <li><%= link_to "Map", root_path  %></li>
             <li><%= link_to "Table", "/path2"  %></li>
-            <li><%= link_to "Settings", edit_user_registration_path  %></li>
+            <% if user_signed_in? %>
+            <li><%= link_to current_user.email, edit_user_registration_path  %></li>
+            <% end %>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
