@@ -14,8 +14,7 @@
 
 <%= stylesheet_link_tag "application", :media => "all" %>
 <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
-<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.no-icons.min.css" rel="stylesheet">
-<link href="http://netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css" rel="stylesheet">
+<link href='http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css' rel='stylesheet' />
 <!--[if lte IE 8]>
 <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
 <![endif]-->
@@ -69,46 +68,16 @@
     <div class="row-fluid">
     <% if @jobs %>
       <div class="span3">
-      <div ng-controller="JobsCtrl">
-            <div class="input-append">
-                <input type="text" ng-model="query" ng-change="search()" class="input-large search-query" placeholder="Search">
-            <span class="add-on"><i class="icon-search"></i></span>
-            </div>
-            <table class="table table-striped table-condensed table-hover" id='map-navigation'>
-                <thead>
-                    <tr>
-                        <th class="id">Name&nbsp;<a ng-click="sort_by('id')"><i class="icon-sort"></i></a></th>
-                        <th class="name">City&nbsp;<a ng-click="sort_by('name')"><i class="icon-sort"></i></a></th>
-                        <th class="description">Country&nbsp;<a ng-click="sort_by('description')"><i class="icon-sort"></i></a></th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <td colspan="6">
-                        <div class="pagination pull-right">
-                            <ul>
-                                <li ng-class="{disabled: currentPage == 0}">
-                                    <a href ng-click="prevPage()">« Prev</a>
-                                </li>
-                                <li ng-repeat="n in range(pagedItems.length)"
-                                    ng-class="{active: n == currentPage}"
-                                ng-click="setPage()">
-                                    <a href ng-bind="n + 1">1</a>
-                                </li>
-                                <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
-                                    <a href ng-click="nextPage()">Next »</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tfoot>
-                <tbody>
-                    <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sortingOrder:reverse">
-                        <td data-position='{{item.latitude}},{{item.longitude}}'>{{item.name}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.country}}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div ng-controller="JobsCtrl">
+          <input type="text" ng-model="search" ng-change="filter()" placeholder="Search"/><br/>
+          <br/>
+          <table class='table table-hover' id='map-navigation'>
+            <thead>
+              <th>Name</th><th>City</th><th>Country</th>
+            </thead>
+            <tr ng-repeat="data in filteredList = (list | filter:search) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"><td data-position='{{data.latitude}},{{data.longitude}}'>{{data.name}}</td><td>{{data.city}}</td><td>{{data.country}}</td></tr>
+          </table>
+          <pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize" class="pagination-small" data-previous-text="&laquo;" data-next-text="&raquo;"></pagination>
         </div>
       </div><!--/span-->
       <% end %>
@@ -123,11 +92,10 @@
 <!-- Javascripts
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <script type="text/javascript">
-        var sortingOrder = 'name';
-    </script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
+<script src='/assets/ui-bootstrap-tpls-0.2.0.js'></script>
+<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
   <%= javascript_include_tag "application" %>
 </body>
 </html>

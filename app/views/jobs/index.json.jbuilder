@@ -5,6 +5,5 @@ json.array!(@jobs) do |jobs|
   json.country jobs.country
   json.latitude jobs.latitude.to_s
   json.longitude jobs.longitude.to_s
-  json.url jobs_url(jobs, format: :json)
 end
 
