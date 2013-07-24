@@ -75,7 +75,7 @@
             <thead>
               <th>Name</th><th>City</th><th>Country</th>
             </thead>
-            <tr ng-repeat="data in filteredList = (list | filter:search) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"><td data-position='{{data.latitude}},{{data.longitude}}'>{{data.name}}</td><td>{{data.city}}</td><td>{{data.country}}</td></tr>
+            <tr ng-repeat="data in filteredList = (list | filter:search) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"><td data-position='{{data.latitude}},{{data.longitude}}'>{{data.name}}</td><td data-position='{{data.latitude}},{{data.longitude}}'>{{data.city}}</td><td data-position='{{data.latitude}},{{data.longitude}}'>{{data.country}}</td></tr>
           </table>
           <pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize" class="pagination-small" data-previous-text="&laquo;" data-next-text="&raquo;"></pagination>
         </div>
@@ -95,7 +95,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
 <script src='/assets/ui-bootstrap-tpls-0.2.0.js'></script>
-<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
   <%= javascript_include_tag "application" %>
 </body>
 </html>
