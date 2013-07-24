@@ -6,19 +6,6 @@
     cursor: pointer;
     }
 </style>
-
-<div id='map'></div>
-<script type='text/javascript'>
-
-var map = L.mapbox.map('map', 'examples.map-uci7ul8p')
-    .setView([40, -74.50], 9);
-
-    document.getElementById('map-navigation').onclick = function(e) {
-    var pos = e.target.getAttribute('data-position');
-    if (pos) {
-        var loc = pos.split(',');
-        map.setView(loc, 11);
-    }
-};
-
-</script>
+<div ng-controller='JobsCtrl'>
+    <map ng-model='list'></map>
+</div>
