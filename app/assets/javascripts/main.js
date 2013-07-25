@@ -8,6 +8,14 @@ app.factory('Jobs', function($resource) {
   return $resource("/jobs/:id", {id: "@id"}, {update: {method: "PUT"}});
 });
 
+app.factory('mySharedService', function($rootScope) {
+    return {
+        broadcast: function(msg) {
+            $rootScope.$broadcast('handleBroadcast', msg);
+        }
+    };
+});
+
 app.filter('startFrom', function() {
     return function(input, start) {
         if(input) {
@@ -19,8 +27,7 @@ return [];
 });
 
 
-var JobsCtrl = function($scope, $timeout, Jobs) {
-
+var JobsCtrl = function($scope, $timeout, Jobs, mySharedService) {
 	 var list = Jobs.query(function() {
 	 	$scope.list = list;
 	 	$scope.currentPage = 1; //current page
@@ -34,17 +41,31 @@ var JobsCtrl = function($scope, $timeout, Jobs) {
         $scope.currentPage = pageNo;
     };
 
+    $scope.broadCastFilter = function() {
+    	mySharedService.broadcast($scope.filteredList);
+    	console.log("hello");
+    };
+
     $scope.$watch('search', function() {
     	if(initializing) {
     		 $timeout(function() { initializing = false; });
     	} else {
+    		$scope.broadCastFilter();
     		$scope.noOfPages = Math.ceil($scope.filteredList.length/$scope.entryLimit);
     	}
     });
 
 	 });
+}
 
-
+var MarkersCtrl = function($scope, Jobs) {
+	var list = Jobs.query(function(){
+		$scope.list = list;
+		$scope.$on("handleBroadcast", function(event, message) {
+			$scope.list = message;
+			console.log(message);
+		});
+	});
 }
 
 app.directive('map', function($timeout){
@@ -63,16 +84,23 @@ app.directive('map', function($timeout){
 		    }
 			};
 			var loading = true;
+			var oldMarkers = [];
 			scope.$watch(attrs.ngModel, function(data) {
-				console.log(data);
 				if(loading) {
     		 $timeout(function() { loading = false; });
     		} else {
+    			if(oldMarkers.length != 0){
+    				for(var j=0;j<oldMarkers.length;j++){
+    					map.removeLayer(oldMarkers[j]);
+    				};
+    				oldMarkers = [];
+    			};
 					for(var i=0;i<data.length;i++){
 						console.log(data[i].latitude);
 						var lat = data[i].latitude;
 						var lon = data[i].longitude;
-						L.mapbox.markerLayer({
+						var name = data[i].name;
+						var markerLayers = L.mapbox.markerLayer({
 					    // this feature is in the GeoJSON format: see geojson.org
 					    // for the full specification
 					    type: 'Feature',
@@ -83,14 +111,16 @@ app.directive('map', function($timeout){
 					        coordinates: [lon, lat]
 					    },
 					    properties: {
-					        title: 'A Single Marker',
+					        title: name,
 					        description: 'Just one of me',
 					        // one can customize markers by adding simplestyle properties
 					        // http://mapbox.com/developers/simplestyle/
-					        'marker-size': 'large',
-					        'marker-color': '#f0a'
+					        'marker-size': 'medium',
+					        'marker-color': '#ff0000'
 					    }
-						}).addTo(map);
+						});
+						oldMarkers.push(markerLayers);
+						map.addLayer(markerLayers);
 					}
     		}
 			});
