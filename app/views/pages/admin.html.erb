@@ -1,0 +1,26 @@
+<h2>Users</h2>
+
+<table class="table">
+<% @users.each do |u| %>
+<tr>
+  <td><%= u.id %></td>
+  <td><%= u.email %></td>
+  <td><%= u.created_at %></td>
+  <td><%= u.last_sign_in_ip %></td>
+  </tr>
+<% end %>
+
+</table>
+
+<h2>Jobs</h2>
+<table class="table">
+<% @jobs.each do |j| %>
+<tr>
+  <td><%= j.id %></td>
+  <td><%= j.name %></td>
+  <td><%= j.city %></td>
+  <td><%= j.country %></td>
+  <td><%= j.latitude %></td>
+  <td><%= j.longitude %></td>
+  </tr>
+<% end %>
