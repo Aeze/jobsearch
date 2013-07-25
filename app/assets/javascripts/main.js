@@ -12,6 +12,9 @@ app.factory('mySharedService', function($rootScope) {
     return {
         broadcast: function(msg) {
             $rootScope.$broadcast('handleBroadcast', msg);
+        },
+        position: function(lat, lon) {
+        		$rootScope.$broadcast('positionBroadcast', lat, lon);
         }
     };
 });
@@ -43,7 +46,10 @@ var JobsCtrl = function($scope, $timeout, Jobs, mySharedService) {
 
     $scope.broadCastFilter = function() {
     	mySharedService.broadcast($scope.filteredList);
-    	console.log("hello");
+    };
+
+    $scope.getPosition = function(lat, lon) {
+    	mySharedService.position(lat,lon);
     };
 
     $scope.$watch('search', function() {
@@ -75,14 +81,9 @@ app.directive('map', function($timeout){
 		template: "<div id='map'></div>",
 		link: function(scope, element, attrs) {
 			var map = L.mapbox.map('map', 'examples.map-uci7ul8p').setView([40, -74.50], 9);
-
-	    document.getElementById('map-navigation').onclick = function(e) {
-		    var pos = e.target.getAttribute('data-position');
-		    if (pos) {
-		        var loc = pos.split(',');
-		        map.setView(loc, 11);
-		    }
-			};
+			scope.$on("positionBroadcast", function(event, lat, lon) {
+				map.setView([lat,lon], 11);
+			});
 			var loading = true;
 			var oldMarkers = [];
 			scope.$watch(attrs.ngModel, function(data) {
