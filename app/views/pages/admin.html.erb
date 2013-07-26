@@ -7,6 +7,7 @@
   <td><%= u.email %></td>
   <td><%= u.created_at %></td>
   <td><%= u.last_sign_in_ip %></td>
+  <td><%= link_to 'edit', '#' %> | <%= link_to 'delete' %></td>
   </tr>
 <% end %>
 
@@ -22,5 +23,15 @@
   <td><%= j.country %></td>
   <td><%= j.latitude %></td>
   <td><%= j.longitude %></td>
+  <td><%= link_to 'edit', '#' %> | <%= link_to 'delete' %></td>
+
   </tr>
+<% end %>
+
+<h3>Add new Job</h3>
+<%= simple_form_for Job.new do |f| %>
+  <%= f.input :name %>
+  <%= f.input :city %>
+  <%= f.input :country %>
+  <%= f.submit %>
 <% end %>
