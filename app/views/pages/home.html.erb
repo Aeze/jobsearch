@@ -1,4 +1,22 @@
-<style>
+    <div class="row-fluid">
+    <% if @jobs %>
+      <div class="span3">
+        <div ng-controller="JobsCtrl">
+          <input type="text" ng-model="search" ng-change="filter()" placeholder="Search"/><br/>
+          <br/>
+          <table class='table table-hover' id='map-navigation'>
+            <thead>
+              <th>Name</th><th>City</th><th>Country</th>
+            </thead>
+            <tr ng-repeat="data in filteredList = (list | filter:search) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" ng-click='getPosition(data.latitude, data.longitude)'><td>{{data.name}}</td><td>{{data.city}}</td><td>{{data.country}}</td></tr>
+          </table>
+          <pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize" class="pagination-small" data-previous-text="&laquo;" data-next-text="&raquo;"></pagination>
+        </div>
+      </div><!--/span-->
+      <% end %>
+      <div class="span9">
+        <%= bootstrap_flash %>
+        <style>
     body { margin:0; padding:0; }
     #map { position:absolute; top:3.6em; bottom:0; width:70%; }
 
@@ -9,3 +27,8 @@
 <div ng-controller='MarkersCtrl'>
     <map ng-model='list'></map>
 </div>
+
+      </div>
+    </div><!--/row-->
+
+

@@ -56,9 +56,10 @@
         <div class="container-fluid nav-collapse">
           <ul class="nav">
             <li><%= link_to "Map", root_path  %></li>
-            <li><%= link_to "Table", "/path2"  %></li>
+            <li><%= link_to "Table", jobs_path  %></li>
             <% if user_signed_in? %>
             <li><%= link_to current_user.email, edit_user_registration_path  %></li>
+            <li><%= link_to "Admin", admin_path  %></li>
             <% end %>
           </ul>
         </div><!--/.nav-collapse -->
@@ -67,27 +68,7 @@
   </div>
 
   <div class="container-fluid">
-    <div class="row-fluid">
-    <% if @jobs %>
-      <div class="span3">
-        <div ng-controller="JobsCtrl">
-          <input type="text" ng-model="search" ng-change="filter()" placeholder="Search"/><br/>
-          <br/>
-          <table class='table table-hover' id='map-navigation'>
-            <thead>
-              <th>Name</th><th>City</th><th>Country</th>
-            </thead>
-            <tr ng-repeat="data in filteredList = (list | filter:search) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" ng-click='getPosition(data.latitude, data.longitude)'><td>{{data.name}}</td><td>{{data.city}}</td><td>{{data.country}}</td></tr>
-          </table>
-          <pagination data-boundary-links="true" data-num-pages="noOfPages" data-current-page="currentPage" max-size="maxSize" class="pagination-small" data-previous-text="&laquo;" data-next-text="&raquo;"></pagination>
-        </div>
-      </div><!--/span-->
-      <% end %>
-      <div class="span9">
-        <%= bootstrap_flash %>
-        <%= yield %>
-      </div>
-    </div><!--/row-->
+  <%= yield %>
 
   </div> <!-- /container -->
 
